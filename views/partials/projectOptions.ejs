@@ -1,0 +1,6 @@
+<div class="project<%= (project.project.meta.myProject) ? ' author' : '' %>">
+    <label>
+        <input type="checkbox" <%- (project.project.meta.myProject) ? '' : 'disabled="disabled" ' %>name="projects[]" value="<%= project.project.links.self %>">
+        <%= project.project.meta.title %>
+    </label>
+</div>

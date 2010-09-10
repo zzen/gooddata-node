@@ -1,0 +1,5 @@
+* login
+* better error handling
+* visuals
+* setup gooddata#Client as subclass of http#Client
+* refactor rid the world of pesky "that"s
