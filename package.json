@@ -1,0 +1,12 @@
+{
+    'name': 'gooddata-admin',
+    'version': '0.0.1',
+    'description': 'Multi-project user management',
+    'engines': { 'node': '>=0.2.0' },
+    'dependencies': {
+        'express': '',
+        'ejs': '',
+        'less': '',
+        'jake': ''
+    }
+}

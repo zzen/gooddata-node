@@ -1,8 +1,4 @@
-
-/**
- * Module dependencies.
- */
-
+require.paths.unshift('./vendor');
 var  express  = require('express')
     ,connect  = require('connect')
     ,gooddata = require('./lib/gooddata')
