@@ -1,13 +1,8 @@
-<h1>Invite user to multiple projects</h1>
+<h1>Login</h1>
 
-<form action="/add" method="post" accept-charset="utf-8">
+<form action="/login" method="post" accept-charset="utf-8">
+    <label for="email">Email</label><input type="text" name="email" value="" id="email">
+    <label for="password">Password</label><input type="password" name="password" value="" id="password">    
 
-    <h3>Select one or more projects</h3>
-    <%- partial('projectOptions', { collection: projects, as: 'project' }) %>
-
-    <h3>Guests to Invite</h3>
-    <div>Enter email addresses (separated by comma) to invite</div>
-    <textarea name="guests" rows="8" cols="40"></textarea>
-
-    <p><input type="submit" value="Invite Users"></p>
+    <p><input type="submit" value="Login"></p>
 </form>
