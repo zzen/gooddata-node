@@ -107,4 +107,5 @@ app.post('/add', function(req, res) {
 
 // Only listen on $ node app.js
 
-if (!module.parent) app.listen(3000);
+var port = parseInt(process.env.PORT, 10) || 8000;
+if (!module.parent) app.listen(port);
