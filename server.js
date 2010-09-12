@@ -43,11 +43,11 @@ app.post('/login', function(req, res){
     var user = req.body.email;
     var pass = req.body.password;
     
-    if (!user || !pass) throw new Error('Username or Password is empty!');
+    if (!user || !pass) res.redirect('/');
     else {
         var gdc = gooddata.createClient(true);
         gdc.login(user, pass, function(err, msg) {
-            if (err) throw new Error(err, msg);
+            if (err) res.redirect('/');
             else {
                 req.session['client'] = gdc;
                 res.redirect('/projects');
@@ -98,7 +98,8 @@ app.post('/add', function(req, res) {
         var projects = req.body.projects;
     
         if (!guests || !Array.isArray(projects) || !projects.length) {
-            throw new Error('You haven\' entered guest email address(es) or checked any projects!');
+            // throw new Error('You haven\' entered guest email address(es) or checked any projects!');
+            res.redirect('/projects');
         }
     
         guests = guests.split(',').map(function(guest) { return guest.trim(); });

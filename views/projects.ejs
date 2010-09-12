@@ -23,32 +23,29 @@
     $(document).ready(function() {
         
         var findUsers = function(elems) {
-            var urls = [];
+            var urls = [], obj = {}, emails = [];
             elems.each(function() {
-                var parent = $(this).parent('.project');
+                var parent = $(this).parents('.project');
                 var uri = $(parent).attr('data-project-uri');
-                urls.push(uri);
+                if (urls.indexOf(uri) == -1) urls.push(uri);
             });
-            return urls.map(function(url) {
-                return users[url].map(function(user) {
-                    return user.user.content.email;
-                });
+            
+            urls.forEach(function(url) {
+                var urlEmails = users[url].map(function(user) { return user.user.content.email; });
+                emails.merge(urlEmails);
             });
+            return emails;
         };
         
         $('#projects .project label').mouseover(function() {
-            if (!selectedMode) {
-                $('#users').html(findUsers($(this)).join('<br>'));
-            }
+            $('#users').html(findUsers($('#projects input:checked').add(this)).join('<br>'));
         });
         
         $('#projects input').change(function() {
             var elems = $('#projects input:checked');
             selectedMode = elems.size();
-            if (selectedMode) {
-                var emails = findUsers(elems);
-                $('#users').html(emails.join('<br>'));
-            }
+            var emails = findUsers(elems);
+            $('#users').html(emails.join('<br>'));
         });
     });
 

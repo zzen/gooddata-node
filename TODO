@@ -1,4 +1,4 @@
-* login
+* AuthTT re-request
 * better error handling
 * visuals
 * setup gooddata#Client as subclass of http#Client
