@@ -30,9 +30,6 @@ app.configure('production', function(){
 
 // Routes
 
-var GD_username = process.env.GD_USER;
-var GD_password = process.env.GD_PASS;
-
 app.get('/', function(req, res) { res.render('index'); });
 
 app.post('/login', function(req, res){
