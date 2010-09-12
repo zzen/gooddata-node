@@ -109,3 +109,4 @@ app.post('/add', function(req, res) {
 
 var port = parseInt(process.env.PORT, 10) || 8000;
 if (!module.parent) app.listen(port);
+console.log('Started server on port '+port);
