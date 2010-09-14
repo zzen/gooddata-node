@@ -2,7 +2,7 @@
 
 <form style="float: right">
     <div id="users"></div>
-    <input type="button" name="remove" value="Remove Selected Users" id="remove" style="display: none">
+    <input type="button" name="remove" value="Remove Selected Users" id="remove">
 </form>
 
 <form action="/add" method="post" accept-charset="utf-8" id="projects">
@@ -46,12 +46,10 @@
             $('#users').html(findUsers($('#projects input:checked').add(this)).join('<br>'));
         });
         
-        $('#users').live('label', function() {
-            this.click(function() {
-                console.log('test');
-                if ($('#users input:checked').size() > 0) $('#remove').show();
-                else $('#remove').hide();
-            });
+        $('#users').delegate('label', 'click', function() {
+            console.log('test');
+            if ($('#users input:checked').size() > 0) $('#remove').show();
+            else $('#remove').hide();
         });
         
         $('#projects input').change(function() {
@@ -60,6 +58,22 @@
             var emails = findUsers(elems);
             $('#users').html(emails.join('<br>'));
             console.log($('#users label').size());
+        });
+        
+        $('#remove').click(function() {
+            var selectedUsers = {};
+            $('#users input:checked').each(function() { selectedUsers[$(this).val()] = []; });
+            
+            var project, email;
+            $('#projects input:checked').each(function() {
+                project = $(this).val();
+                // filter out users that were checked, send to Client.prototype.disableUsers
+                users[project].forEach(function(projUser) {
+                    email = projUser.user.content.email;
+                    if (selectedUsers[email]) selectedUsers[email].push(project);
+                });
+            });
+            console.log(selectedUsers);
         });
     });
 </script>

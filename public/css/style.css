@@ -5,3 +5,10 @@ body {
 #projects .readonly {
   background-color: #999;
 }
+#users label {
+    line-height: 1.5em;
+}
+#remove {
+    display: none;
+    margin-top: 20px;
+}
