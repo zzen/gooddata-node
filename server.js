@@ -21,7 +21,7 @@ app.configure(function(){
 });
 
 app.configure('development', function(){
-    app.use(connect.errorHandler({ dumpExceptions: true, showStack: true, textMateUrls: true })); 
+    app.use(connect.errorHandler({ dumpExceptions: true, showStack: true, formatUrl: 'txmt' })); 
 });
 
 app.configure('production', function(){
