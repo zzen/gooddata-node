@@ -51,7 +51,7 @@ app.post('/login', function(req, res){
 
 app.get('/projects', function(req, res) {
     var gdc = req.session['client'];
-    if (!gdc) res.redirect('/');
+    if (!gdc) res.redirect('/'); // if stored (logged-in) client found in session, redirect to login
     else {
         
         if(req.session['projects']) {
@@ -102,6 +102,20 @@ app.post('/add', function(req, res) {
                 res.send('<code>'+sys.inspect(data,false,10)+'</code>');
             });
         });
+    }
+});
+
+app.post('/remove', function(req, res) {
+    var gdc = req.session['client'];
+    if (!gdc) res.redirect('/');
+    else {
+        hash = JSON.parse(req.body.projects);
+        Object.keys(hash).forEach(function(project) {
+            gdc.disableUsers(project, hash[project], function(resp, data) {
+                console.log('Disabled '+sys.inspect(hash[project])+' in '+project+' status: '+resp.statusCode);
+            });
+        });
+        res.send('You\'ve asked me to kick the following users:'+sys.inspect(hash));
     }
 });
 

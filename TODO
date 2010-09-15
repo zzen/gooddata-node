@@ -1,3 +1,5 @@
+* show only ENABLED users
+* show all admin-privilledge projects
 * AuthTT re-request
 * better error handling
 * visuals

@@ -1,8 +1,9 @@
 <h1>Invite user to multiple projects</h1>
 
-<form style="float: right">
+<form id="removeUsers" action="/remove" method="post" accept-charset="utf-8">
     <div id="users"></div>
-    <input type="button" name="remove" value="Remove Selected Users" id="remove">
+    <input type="hidden" name="projects" value="" id="removeUsersFromProjects">
+    <input type="submit" name="remove" value="Remove Selected Users" id="remove">
 </form>
 
 <form action="/add" method="post" accept-charset="utf-8" id="projects">
@@ -30,8 +31,7 @@
         var findUsers = function(elems) {
             var urls = [], obj = {}, emails = [];
             elems.each(function() {
-                var parent = $(this).parents('.project');
-                var uri = $(parent).attr('data-project-uri');
+                var uri = $(this).val();
                 if (urls.indexOf(uri) == -1) urls.push(uri);
             });
             
@@ -43,13 +43,7 @@
         };
         
         $('#projects .project label').mouseover(function() {
-            $('#users').html(findUsers($('#projects input:checked').add(this)).join('<br>'));
-        });
-        
-        $('#users').delegate('label', 'click', function() {
-            console.log('test');
-            if ($('#users input:checked').size() > 0) $('#remove').show();
-            else $('#remove').hide();
+            $('#users').html(findUsers($('#projects input:checked').add($(this).children('input'))).join('<br>'));
         });
         
         $('#projects input').change(function() {
@@ -57,23 +51,24 @@
             selectedMode = elems.size();
             var emails = findUsers(elems);
             $('#users').html(emails.join('<br>'));
-            console.log($('#users label').size());
+        });
+        
+        $('#users').delegate('label', 'click', function() {
+            if ($('#users input:checked').size() > 0) $('#remove').show();
+            else $('#remove').hide();
         });
         
         $('#remove').click(function() {
-            var selectedUsers = {};
+            var selectedUsers = {}, projectsHash = {};
             $('#users input:checked').each(function() { selectedUsers[$(this).val()] = []; });
             
-            var project, email;
+            var projects, project, email;
             $('#projects input:checked').each(function() {
                 project = $(this).val();
                 // filter out users that were checked, send to Client.prototype.disableUsers
-                users[project].forEach(function(projUser) {
-                    email = projUser.user.content.email;
-                    if (selectedUsers[email]) selectedUsers[email].push(project);
-                });
+                projectsHash[project] = users[project].filter(function(user) { return selectedUsers[user.user.content.email]; }).map(function(user) { return user.user.links.self; });
             });
-            console.log(selectedUsers);
+            $('#removeUsersFromProjects').val(JSON.stringify(projectsHash));
         });
     });
 </script>

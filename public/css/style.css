@@ -12,3 +12,8 @@ body {
     display: none;
     margin-top: 20px;
 }
+
+#removeUsers {
+    position: absolute;
+    left: 600px;
+}
